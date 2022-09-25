@@ -1,6 +1,5 @@
 # Тестовое задание web-программист (React.js)
 
-
 ### [Ссылка на проект:https://github.com/MarinaNat/sorting](https://github.com/MarinaNat/sorting)
 
 ### Установка

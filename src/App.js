@@ -24,7 +24,6 @@ function App() {
   const [searchText, setSearchText] = useState('');//для поиска
   // const [search, setSearch] = useState({ searchValue: '', fieldQuery: '', fieldTarget: '' });
 
-
   //загрузка данных
   useEffect(() => {
     // axios.get(baseUrl).then((res) => {
@@ -33,7 +32,6 @@ function App() {
     setIsLoaded(true)
     // })
   }, [])
-
 
   const currentPage = (pg) => {
     setCurrentPageNumber(pg);
