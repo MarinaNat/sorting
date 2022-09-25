@@ -4,6 +4,7 @@ import Tabl from './components/elements/Tabl/Tabl';
 import Loader from './Loader/Loader';
 import { items } from './components/const/items';
 import Poginator from './components/elements/Paginator/Poginator';
+import { Route, Routes } from 'react-router-dom';
 
 
 function App() {
@@ -34,11 +35,13 @@ function App() {
   }, [])
 
   const currentPage = (pg) => {
+    console.log('pg', pg)
     setCurrentPageNumber(pg);
     setButtonNextDisabled('')
     setButtonPreviousDisabled('')
     setCurrentPageActive('active')
   }
+
 
   const onSearchSend = (text) => {
     setSearchText(text);
@@ -147,18 +150,24 @@ function App() {
       {isLoading ?
         <Loader /> :
         <div className='page'>
-          <Tabl
-            fieldTarget={fieldTarget}
-            setFieldTarget={setFieldTarget}
-            sortData={sortData}
-            contactData={currentBlockRows}
-            directionSort={directionSort}
-            onSearchSend={onSearchSend}
-            fieldQuery={fieldQuery}
-            setFieldQuery={setFieldQuery}
-            searchValue={searchValue}
-            setsearchValue={setsearchValue}
-          />
+          <Routes>
+            <Route
+              path='*'
+              element={<Tabl
+                fieldTarget={fieldTarget}
+                setFieldTarget={setFieldTarget}
+                sortData={sortData}
+                contactData={currentBlockRows}
+                directionSort={directionSort}
+                onSearchSend={onSearchSend}
+                fieldQuery={fieldQuery}
+                setFieldQuery={setFieldQuery}
+                searchValue={searchValue}
+                setsearchValue={setsearchValue}
+              />}>
+            </Route>
+          </Routes>
+
           <Poginator
             pages={pages}
             currentPage={currentPage}
@@ -171,7 +180,7 @@ function App() {
           />
         </div>
       }
-    </div>
+    </div >
   );
 }
 

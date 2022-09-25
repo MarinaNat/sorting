@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import styles from './Poginator.module.scss';
 // import ReactPaginate from 'react-paginate';
 // import { NavLink } from 'react-router-dom';
@@ -19,22 +20,31 @@ const Poginator = ({
 			<nav aria-label="...">
 				<ul className="pagination">
 					<li className={`page-item ${buttonPreviousDisabled}`}>
-						<a className="page-link" href="/#" tabIndex="-1" onClick={() => onPreviousClick()}>Previous</a>
+						<NavLink className="page-link" to="#" tabIndex="-1" onClick={(e) => {
+							e.preventDefault()
+							onPreviousClick()
+						}}>Previous</NavLink>
 					</li>
 					{
 						pages.map(p => {
 							return (
-								<li className={`page-item ${currentPageNumber === p ? currentPageActive : ''}`} key={p} >
-									<a className="page-link" href="/#" onClick={() => { currentPage(p) }}>
+								<li className={`page-item ${currentPageNumber === p ? 'active' : ''}`} key={p} >
+									<NavLink className="page-link" to={p} onClick={(e) => {
+										e.preventDefault()
+										currentPage(p)
+									}}>
 										{p}
-									</a>
+									</NavLink>
 								</li>
 							)
 						})
 					}
 
 					<li className={`page-item ${buttonNextDisabled}`}>
-						<a className="page-link" href="/#" onClick={() => onNextClick()}>Next</a>
+						<NavLink className="page-link" to="#" onClick={(e) => {
+							e.preventDefault()
+							onNextClick()
+						}}>Next</NavLink>
 					</li>
 				</ul>
 			</nav >

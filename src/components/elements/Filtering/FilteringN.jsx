@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 // import { items } from '../../const/items';
 
 const FilteringN = ({ onSearchSend }) => {
@@ -28,38 +29,38 @@ const FilteringN = ({ onSearchSend }) => {
 		<form className="input-group" onSubmit={handleSubmit}>
 			<button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Колонка</button>
 			<ul className="dropdown-menu" value={searchTarget} name="target" onChange={(e) => { setsearchTarget(e.target.value) }}>
-				<li><a className="dropdown-item" href="/#" value="name" onClick={() => {
+				<li><Link className="dropdown-item" href="/#" value="name" onClick={() => {
 					fieldTargetData('Название')
 					setsearchTarget('name')
-				}}>Название</a></li>
-				<li><a className="dropdown-item" href="/#" value="quantity" onClick={() => {
+				}}>Название</Link></li>
+				<li><Link className="dropdown-item" href="/#" value="quantity" onClick={() => {
 					fieldTargetData('Количество')
 					setsearchTarget('quantity')
-				}}>Количество</a></li>
-				<li><a className="dropdown-item" href="/#" value="distance" onClick={() => {
+				}}>Количество</Link></li>
+				<li><Link className="dropdown-item" href="/#" value="distance" onClick={() => {
 					fieldTargetData('Расстояние')
 					setsearchTarget('distance')
-				}} >Расстояние</a></li>
+				}} >Расстояние</Link></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li><a className="dropdown-item" href="/#">{fieldTarget}</a></li>
 			</ul>
 			<ul className="dropdown-menu dropdown-menu-end" value={searchQuery} name="query">
-				<li><a className="dropdown-item" href="/#" onClick={() => {
+				<li><Link className="dropdown-item" href="/#" onClick={() => {
 					fieldQueryData('равно')
 					setsearchQuery('equally')
-				}} >равно</a></li>
-				<li><a className="dropdown-item" href="/#" onClick={() => {
+				}} >равно</Link></li>
+				<li><Link className="dropdown-item" href="/#" onClick={() => {
 					fieldQueryData('содержит')
 					setsearchQuery('contains')
-				}} >содержит</a></li>
-				<li><a className="dropdown-item" href="/#" onClick={() => {
+				}} >содержит</Link></li>
+				<li><Link className="dropdown-item" href="/#" onClick={() => {
 					fieldQueryData('больше')
 					setsearchQuery('more')
-				}} >больше</a></li>
-				<li><a className="dropdown-item" href="/#" onClick={() => {
+				}} >больше</Link></li>
+				<li><Link className="dropdown-item" href="/#" onClick={() => {
 					fieldQueryData('меньше')
 					setsearchQuery('less')
-				}} >меньше</a></li>
+				}} >меньше</Link></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li><a className="dropdown-item" href="/#">{fieldQuery}</a></li>
 			</ul>
