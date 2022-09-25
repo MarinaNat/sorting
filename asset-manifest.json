@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/sorting/static/css/main.c8d34137.css",
+    "main.js": "/sorting/static/js/main.6e5954b1.js",
+    "index.html": "/sorting/index.html",
+    "main.c8d34137.css.map": "/sorting/static/css/main.c8d34137.css.map",
+    "main.6e5954b1.js.map": "/sorting/static/js/main.6e5954b1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c8d34137.css",
+    "static/js/main.6e5954b1.js"
+  ]
+}
