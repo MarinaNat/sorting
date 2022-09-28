@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import styles from './Poginator.module.scss';
-// import ReactPaginate from 'react-paginate';
 // import { NavLink } from 'react-router-dom';
 
 const Poginator = ({

@@ -8,7 +8,6 @@ const FilteringN = ({ onSearchSend }) => {
 	const [searchValue, setsearchValue] = useState('');
 	const [searchTarget, setsearchTarget] = useState('');
 	const [searchQuery, setsearchQuery] = useState('');
-	// const [innerSearch, setInnerSearch] = useState(search);
 
 	const fieldTargetData = (field) => {
 		setfieldTarget(field)
@@ -68,18 +67,21 @@ const FilteringN = ({ onSearchSend }) => {
 			<input
 				name="argument"
 				type="text"
-				placeholder="Значение"
+				placeholder="Найти"
 				className="form-control"
 				aria-label="Text input with 2 dropdown buttons"
 				value={searchValue}
-				onChange={(e) => { setsearchValue(e.target.value) }}
+				onChange={(e) => {
+					setsearchValue(e.target.value)
+					console.log('e.target.value', e.target.value)
+				}}
 			/>
 			<button
 				type="button"
 				className="btn btn-outline-secondary"
-				onClick={() => onSearchSend(searchValue)}
+				onClick={() => onSearchSend(searchValue, searchTarget, searchQuery)}
 			>
-				Фильтр
+				Найти
 			</button>
 		</form>
 	)

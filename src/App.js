@@ -18,12 +18,11 @@ function App() {
   const [totalCountPage, setTotalCountPage] = useState(0) //количество страниц
   const limitCountPage = 5; //лимит строк на странице
   const [isLoaded, setIsLoaded] = useState(false);
-  const [currentPageNumber, setCurrentPageNumber] = useState('1');
+  const [currentPageNumber, setCurrentPageNumber] = useState('');
   const [buttonNextDisabled, setButtonNextDisabled] = useState('');//для добавления класса disable кнопке next
   const [buttonPreviousDisabled, setButtonPreviousDisabled] = useState('');//для добавления класса disable кнопке disabled
-  const [currentPageActive, setCurrentPageActive] = useState('');//для добавления класса active кнопке
-  const [searchText, setSearchText] = useState('');//для поиска
-  // const [search, setSearch] = useState({ searchValue: '', fieldQuery: '', fieldTarget: '' });
+  // const [currentPageActive, setCurrentPageActive] = useState('');//для добавления класса active кнопке
+  const [searchText, setSearchText] = useState({ text: '', target: '', query: '' });//для поиска
 
   //загрузка данных
   useEffect(() => {
@@ -31,6 +30,7 @@ function App() {
     // setContactData(res.data)
     setIsLoading(false)
     setIsLoaded(true)
+
     // })
   }, [])
 
@@ -39,48 +39,44 @@ function App() {
     setCurrentPageNumber(pg);
     setButtonNextDisabled('')
     setButtonPreviousDisabled('')
-    setCurrentPageActive('active')
+    // setCurrentPageActive('active')
   }
 
 
-  const onSearchSend = (text) => {
-    setSearchText(text);
-    // console.log('text', text)
+  const onSearchSend = (text, target, query) => {
+    setSearchText({ text: text, target: target, query: query });
+    console.log('text, target, query', text, target, query);
+
   }
+  console.log('searchText', searchText)
+
   // функция для фильтрации
   const getFiltredData = () => {
-    if (!searchText) {
+    console.log('filterItems: ');
+    console.log(searchText);
+    if (searchText.query === '' & searchText.text === '' & searchText.target === '') {
       return contactData
-    }
-    return contactData.filter(
-      el => {
-        return el['name'].toLowerCase().includes(searchText.toLowerCase())
-      }
-    )
+    };
+    if (searchText.query === '') {
+      return contactData.filter(
+        el => {
+          return el['name'].toLowerCase().includes(searchText.text.toLowerCase())
+        }
+      )
+    };
+    const filteredItems = contactData.filter((item) => {
+      return (
+        searchText.query !== 'contains' ? (
+          searchText.query === 'less' ? item[searchText.target] < Number(searchText.text) :
+            (searchText.query === 'more' ? item[searchText.target] > Number(searchText.text) :
+              item[searchText.target] === Number(searchText.text))
+        ) : (
+          item.name.toLowerCase().includes(searchText.text.toLowerCase().trim())
+        )
+      );
+    });
+    return filteredItems;
   }
-  // const onSearchSend = (searchValue, fieldQuery, fieldTarget) => {
-  //   setSearch({ searchValue, fieldQuery, fieldTarget });
-  // console.log('text', text)
-  // }
-  // const filterItems = (items, search) => {
-  //   console.log('filterItems: ');
-  //   console.log(search);
-  //   if (search.fieldQuery === '' & search.searchValue === '' & search.fieldTarget === '') {
-  //     return items
-  //   };
-  //   const filteredItems = items.filter((item) => {
-  //     return (
-  //       search.fieldQuery !== 'соодержит' ? (
-  //         search.fieldQuery === 'меньше' ? item.fieldTarget < Number(search.searchValue) :
-  //           (search.fieldQuery === 'больше' ? item.fieldTarget > Number(search.searchValue) :
-  //             item.fieldTarget = Number(search.searchValue))
-  //       ) : (
-  //         item.name.toLowerCase().includes(search.searchValue.toLowerCase().trim())
-  //       )
-  //     );
-  //   });
-  //   return filteredItems;
-  // }
 
   const filtredData = getFiltredData()
   console.log('filtredData', filtredData)
@@ -97,8 +93,7 @@ function App() {
     setTotalCountRow(contactData.length)
     const getTotalCountPage = totalCountRow / limitCountPage
     setTotalCountPage(getTotalCountPage)
-
-    currentPage()
+    currentPage(1)
   }, [isLoaded, setTotalCountRow, contactData.length, setTotalCountPage, totalCountRow])
 
 
@@ -175,7 +170,7 @@ function App() {
             onNextClick={onNextClick}
             buttonNextDisabled={buttonNextDisabled}
             buttonPreviousDisabled={buttonPreviousDisabled}
-            currentPageActive={currentPageActive}
+            // currentPageActive={currentPageActive}
             currentPageNumber={currentPageNumber}
           />
         </div>
