@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ArrowDown from '../../../svg/ArrowDown';
 import ArrowUp from '../../../svg/ArrowUp';
+import Filtering2 from '../Filtering/Filtering2';
 // import Filtering from '../Filtering/Filtering';
 import FilteringN from '../Filtering/FilteringN';
 import styles from './Tabl.module.scss';
@@ -24,7 +25,7 @@ const Tabl = ({ search, setSearch, sortData, contactData, directionSort, onSearc
 	return (
 		<div className={`container`}>
 			<h1 className='title'>Таблица с сортировкой и фильтрацией</h1>
-			<FilteringN
+			{/* <FilteringN
 				onSearchSend={onSearchSend}
 				fieldData={fieldData}
 				fieldTarget={fieldTarget}
@@ -35,23 +36,27 @@ const Tabl = ({ search, setSearch, sortData, contactData, directionSort, onSearc
 				setsearchValue={setsearchValue}
 				search={search}
 				setSearch={setSearch}
+			/> */}
+			<Filtering2
+				onSearchSend={onSearchSend}
 			/>
+
 			<div className={styles.table}>
 				{/* <Filtering onSearchSend={onSearchSend} fieldData={fieldData} /> */}
 				<div className={styles.table__info}>
 					<ul className={styles.table__items}>
 						<li className={`${styles.table__item} ${styles.table__item_header}`}>Дата</li>
-						<li className={`${styles.table__item} ${styles.table__item_header}`}>
+						<li className={`${styles.table__item} ${styles.table__item_header} ${styles.table__item_activ}`}>
 							<button className={styles.table__button} onClick={() => { fieldSortData('name') }}>
 								Название {fieldData === 'name' ? <Arrow /> : null}
 							</button>
 
 						</li>
-						<li className={`${styles.table__item} ${styles.table__item_header}`}>
+						<li className={`${styles.table__item} ${styles.table__item_header} ${styles.table__item_activ}`}>
 							<button className={styles.table__button} onClick={() => { fieldSortData('quantity') }}>
 								Количество {fieldData === 'quantity' ? <Arrow /> : null}
 							</button></li>
-						<li className={`${styles.table__item} ${styles.table__item_header}`}>
+						<li className={`${styles.table__item} ${styles.table__item_header} ${styles.table__item_activ}`}>
 							<button className={styles.table__button} onClick={() => { fieldSortData('distance') }}>
 								Расстояние {fieldData === 'distance' ? <Arrow /> : null}
 							</button>

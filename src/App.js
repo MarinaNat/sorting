@@ -54,7 +54,7 @@ function App() {
   const getFiltredData = () => {
     console.log('filterItems: ');
     console.log(searchText);
-    if (searchText.query === '' & searchText.text === '' & searchText.target === '') {
+    if (JSON.stringify(searchText) === JSON.stringify({ text: '', target: '', query: '' })) {
       return contactData
     };
     if (searchText.query === '') {
