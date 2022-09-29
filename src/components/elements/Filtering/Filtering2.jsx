@@ -45,18 +45,26 @@ const Filtering2 = ({ onSearchSend }) => {
 						console.log('e.target.value in setsearchQuery', e.target.value)
 					}}
 				>
-					<option value="equally" onClick={() => {
-						setsearchQuery('equally')
-					}}>Равно</option>
-					<option value="contains" onClick={() => {
-						setsearchQuery('contains')
-					}}>Содержит</option>
-					<option value="more" onClick={() => {
-						setsearchQuery('more')
-					}}>Больше</option>
-					<option value="less" onClick={() => {
-						setsearchQuery('less')
-					}}>Меньше</option>
+					{searchTarget === 'name' ?
+						<option value="contains" onClick={() => {
+							setsearchQuery('contains')
+						}}>Содержит</option> :
+						<>
+							<option value="equally" onClick={() => {
+								setsearchQuery('equally')
+							}}>Равно</option>
+							<option value="more" onClick={() => {
+								setsearchQuery('more')
+							}}>Больше</option>
+							<option value="less" onClick={() => {
+								setsearchQuery('less')
+							}}>Меньше</option>
+						</>
+					}
+
+
+
+
 				</select>
 			</fieldset>
 			<div className={styles.search}>
