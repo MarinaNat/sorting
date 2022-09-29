@@ -1,0 +1,19 @@
+.poginator {
+	display: flex;
+	justify-content: center;
+	&__list {
+		display: flex;
+		list-style-type: none;
+	}
+	&__link {
+		padding: 8px;
+		margin: 8px;
+		text-decoration: none;
+		cursor: pointer;
+		&_active {
+			font-weight: 700;
+			color: rgb(103, 8, 255);
+			text-decoration: solid;
+		}
+	}
+}

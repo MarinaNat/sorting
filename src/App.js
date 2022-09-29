@@ -1,50 +1,51 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.scss';
 import Tabl from './components/elements/Tabl/Tabl';
 import Loader from './Loader/Loader';
 import { items } from './components/const/items';
-import Poginator from './components/elements/Paginator/Poginator';
+// import Poginator from './components/elements/Paginator/Poginator';
 import { Route, Routes } from 'react-router-dom';
+import Poginator2 from './components/elements/Paginator/Poginator2';
 
 
 function App() {
   const [fieldTarget, setFieldTarget] = useState('');
   const [fieldQuery, setFieldQuery] = useState('');
   const [searchValue, setsearchValue] = useState('');
-  const [contactData, setContactData] = useState(items);
-  const [isLoading, setIsLoading] = useState(true);
+  const [contactData, setContactData] = useState(items); //данные
+  const [isLoading, setIsLoading] = useState(true); //стейт загрузки
   const [directionSort, setDirectionSort] = useState(true);
-  const [totalCountRow, setTotalCountRow] = useState(0) //количество строк
-  const [totalCountPage, setTotalCountPage] = useState(0) //количество страниц
-  const limitCountPage = 5; //лимит строк на странице
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [currentPageNumber, setCurrentPageNumber] = useState('');
-  const [buttonNextDisabled, setButtonNextDisabled] = useState('');//для добавления класса disable кнопке next
-  const [buttonPreviousDisabled, setButtonPreviousDisabled] = useState('');//для добавления класса disable кнопке disabled
+  // const [totalCountRow, setTotalCountRow] = useState(0) //количество строк
+  // const [totalCountPage, setTotalCountPage] = useState(0) //количество страниц
+  // const limitCountPage = 5; //лимит строк на странице
+  // const [isLoaded, setIsLoaded] = useState(false);
+  // const [currentPageNumber, setCurrentPageNumber] = useState('');
+  // const [buttonNextDisabled, setButtonNextDisabled] = useState('');//для добавления класса disable кнопке next
+  // const [buttonPreviousDisabled, setButtonPreviousDisabled] = useState('');//для добавления класса disable кнопке disabled
   // const [currentPageActive, setCurrentPageActive] = useState('');//для добавления класса active кнопке
   const [searchText, setSearchText] = useState({ text: '', target: '', query: '' });//для поиска
+  const [currentPage, setCurrentPage] = useState(1) //текущая страница
+  const [limitCountPage] = useState(5); //лимит строк на странице
 
   //загрузка данных
   useEffect(() => {
     // axios.get(baseUrl).then((res) => {
     // setContactData(res.data)
-    setIsLoading(false)
-    setIsLoaded(true)
 
+    // setIsLoaded(true)
+    setContactData(items)
+    setIsLoading(false)
     // })
   }, [])
 
-  const currentPage = (pg) => {
-    console.log('pg', pg)
-    setCurrentPageNumber(pg);
-    setButtonNextDisabled('')
-    setButtonPreviousDisabled('')
-    // setCurrentPageActive('active')
-  }
 
 
   const onSearchSend = (text, target, query) => {
-    setSearchText({ text: text, target: target, query: query });
+    setSearchText({
+      text: text,
+      target: target,
+      query: query
+    });
     console.log('text, target, query', text, target, query);
 
   }
@@ -81,26 +82,47 @@ function App() {
   const filtredData = getFiltredData()
   console.log('filtredData', filtredData)
 
-  const lastBlockRow = currentPageNumber * limitCountPage;
-  const firstBlockRow = lastBlockRow - limitCountPage;
-  const currentBlockRows = filtredData.slice(firstBlockRow, lastBlockRow);
 
-  useEffect(() => {
-    if (!isLoaded) {
-      return
-    }
+  // // пагинация
+  // const currentPage = (pg) => {
+  //   console.log('pg', pg)
+  //   setCurrentPageNumber(pg);
+  //   setButtonNextDisabled('')
+  //   setButtonPreviousDisabled('')
+  //   // setCurrentPageActive('active')
+  // }
+  const lastBlockRow = currentPage * limitCountPage; //индекс последней страницы
+  const firstBlockRow = lastBlockRow - limitCountPage; //индекс первой страницы
+  const currentRow = filtredData.slice(firstBlockRow, lastBlockRow)
 
-    setTotalCountRow(contactData.length)
-    const getTotalCountPage = totalCountRow / limitCountPage
-    setTotalCountPage(getTotalCountPage)
-    currentPage(1)
-  }, [isLoaded, setTotalCountRow, contactData.length, setTotalCountPage, totalCountRow])
+  const paginate = pageNamber => setCurrentPage(pageNamber)
 
-
-  let pages = []
-  for (let i = 0; i <= totalCountPage; i++) {
-    pages.push(i + 1)
+  const nextPage = () => {
+    setCurrentPage(prev => prev + 1)
   }
+
+  const prevPage = () => {
+    setCurrentPage(prev => prev - 1)
+  }
+  // const lastBlockRow = currentPageNumber * limitCountPage; //индекс последней страницы
+  // const firstBlockRow = lastBlockRow - limitCountPage; //индекс первой страницы
+  // const currentBlockRows = filtredData.slice(firstBlockRow, lastBlockRow);
+
+  // useEffect(() => {
+  //   if (!isLoaded) {
+  //     return
+  //   }
+  //   setTotalCountRow(contactData.length)
+  //   const getTotalCountPage = Math.ceil(totalCountRow / limitCountPage)
+  //   setTotalCountPage(getTotalCountPage)
+  //   currentPage(1)
+  // }, [isLoaded, setTotalCountRow, contactData.length, setTotalCountPage, totalCountRow])
+
+
+  // let pages = []
+  // for (let i = 1; i <= totalCountPage; i++) {
+  //   pages.push(i)
+  // }
 
   //сортировка страниц
   const sortData = (field) => {
@@ -118,25 +140,25 @@ function App() {
     setContactData(sortData)
     setDirectionSort(!directionSort)
   }
-  //функция добавления класса disable кнопке next
-  const onNextClick = () => {
-    if (currentPageNumber > totalCountPage) {
-      setButtonNextDisabled('disabled')
-      return
-    }
-    setButtonPreviousDisabled('')
-    setCurrentPageNumber(currentPageNumber + 1)
-  }
+  // //функция добавления класса disable кнопке next
+  // const onNextClick = () => {
+  //   if (currentPageNumber > totalCountPage) {
+  //     setButtonNextDisabled('disabled')
+  //     return
+  //   }
+  //   setButtonPreviousDisabled('')
+  //   setCurrentPageNumber(currentPageNumber + 1)
+  // }
 
-  //функция добавления класса disable кнопке Previous
-  const onPreviousClick = () => {
-    if (currentPageNumber <= 1) {
-      setButtonPreviousDisabled('disabled')
-      return
-    }
-    setButtonNextDisabled('')
-    setCurrentPageNumber(currentPageNumber - 1)
-  }
+  // //функция добавления класса disable кнопке Previous
+  // const onPreviousClick = () => {
+  //   if (currentPageNumber <= 1) {
+  //     setButtonPreviousDisabled('disabled')
+  //     return
+  //   }
+  //   setButtonNextDisabled('')
+  //   setCurrentPageNumber(currentPageNumber - 1)
+  // }
 
 
 
@@ -149,21 +171,17 @@ function App() {
             <Route
               path='*'
               element={<Tabl
-                fieldTarget={fieldTarget}
-                setFieldTarget={setFieldTarget}
                 sortData={sortData}
-                contactData={currentBlockRows}
+                // contactData={currentBlockRows}
+                contactData={currentRow}
                 directionSort={directionSort}
                 onSearchSend={onSearchSend}
-                fieldQuery={fieldQuery}
-                setFieldQuery={setFieldQuery}
-                searchValue={searchValue}
-                setsearchValue={setsearchValue}
+                isLoading={isLoading}
               />}>
             </Route>
           </Routes>
 
-          <Poginator
+          {/* <Poginator
             pages={pages}
             currentPage={currentPage}
             onPreviousClick={onPreviousClick}
@@ -172,6 +190,16 @@ function App() {
             buttonPreviousDisabled={buttonPreviousDisabled}
             // currentPageActive={currentPageActive}
             currentPageNumber={currentPageNumber}
+            totalCountPage={filtredData.length}
+            limitCountPage={limitCountPage}
+          /> */}
+          <Poginator2
+            limitCountPage={limitCountPage}
+            tottalCount={filtredData.length}
+            paginate={paginate}
+            nextPage={nextPage}
+            prevPage={prevPage}
+            currentPage={currentPage}
           />
         </div>
       }

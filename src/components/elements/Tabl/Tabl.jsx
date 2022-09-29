@@ -3,10 +3,10 @@ import ArrowDown from '../../../svg/ArrowDown';
 import ArrowUp from '../../../svg/ArrowUp';
 import Filtering2 from '../Filtering/Filtering2';
 // import Filtering from '../Filtering/Filtering';
-import FilteringN from '../Filtering/FilteringN';
+// import FilteringN from '../Filtering/FilteringN';
 import styles from './Tabl.module.scss';
 
-const Tabl = ({ search, setSearch, sortData, contactData, directionSort, onSearchSend, fieldTarget, setfieldTarget, fieldQuery, setfieldQuery, searchValue, setsearchValue }) => {
+const Tabl = ({ sortData, contactData, directionSort, onSearchSend, isLoading }) => {
 
 	const [fieldData, setfieldData] = useState('');
 
@@ -22,27 +22,16 @@ const Tabl = ({ search, setSearch, sortData, contactData, directionSort, onSearc
 		setfieldData(field)
 	}
 
+	if (isLoading) {
+		return <h2>Loading</h2>
+	}
 	return (
 		<div className={`container`}>
 			<h1 className='title'>Таблица с сортировкой и фильтрацией</h1>
-			{/* <FilteringN
-				onSearchSend={onSearchSend}
-				fieldData={fieldData}
-				fieldTarget={fieldTarget}
-				setfieldTarget={setfieldTarget}
-				fieldQuery={fieldQuery}
-				setfieldQuery={setfieldQuery}
-				searchValue={searchValue}
-				setsearchValue={setsearchValue}
-				search={search}
-				setSearch={setSearch}
-			/> */}
 			<Filtering2
 				onSearchSend={onSearchSend}
 			/>
-
 			<div className={styles.table}>
-				{/* <Filtering onSearchSend={onSearchSend} fieldData={fieldData} /> */}
 				<div className={styles.table__info}>
 					<ul className={styles.table__items}>
 						<li className={`${styles.table__item} ${styles.table__item_header}`}>Дата</li>
@@ -50,7 +39,6 @@ const Tabl = ({ search, setSearch, sortData, contactData, directionSort, onSearc
 							<button className={styles.table__button} onClick={() => { fieldSortData('name') }}>
 								Название {fieldData === 'name' ? <Arrow /> : null}
 							</button>
-
 						</li>
 						<li className={`${styles.table__item} ${styles.table__item_header} ${styles.table__item_activ}`}>
 							<button className={styles.table__button} onClick={() => { fieldSortData('quantity') }}>
