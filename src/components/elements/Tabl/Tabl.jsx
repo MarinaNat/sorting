@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import ArrowDown from '../../../svg/ArrowDown';
 import ArrowUp from '../../../svg/ArrowUp';
 import Filtering2 from '../Filtering/Filtering2';
-// import Filtering from '../Filtering/Filtering';
-// import FilteringN from '../Filtering/FilteringN';
 import styles from './Tabl.module.scss';
 
 const Tabl = ({ sortData, contactData, directionSort, onSearchSend, isLoading }) => {
