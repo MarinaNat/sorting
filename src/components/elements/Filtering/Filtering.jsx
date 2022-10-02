@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import styles from './Filtering2.module.scss';
+import styles from './Filtering.module.scss';
 
-const Filtering2 = ({ onSearchSend }) => {
-	// const [fieldTarget, setfieldTarget] = useState('');
-	// const [fieldQuery, setfieldQuery] = useState('');
+const Filtering = ({ onSearchSend }) => {
 	const [searchValue, setsearchValue] = useState('');
-	const [searchTarget, setsearchTarget] = useState('');
+	const [searchTarget, setsearchTarget] = useState('name');
 	const [searchQuery, setsearchQuery] = useState('');
 
 	return (
@@ -19,7 +17,6 @@ const Filtering2 = ({ onSearchSend }) => {
 					className={styles.filter}
 					onChange={(e) => {
 						setsearchTarget(e.target.value)
-						console.log('e.target.value in setsearchTarget', e.target.value)
 					}}
 				>
 					<option value="name" onClick={() => {
@@ -42,13 +39,9 @@ const Filtering2 = ({ onSearchSend }) => {
 					className={styles.filter}
 					onChange={(e) => {
 						setsearchQuery(e.target.value)
-						console.log('e.target.value in setsearchQuery', e.target.value)
 					}}
 				>
-					{searchTarget === 'name' ?
-						<option value="contains" onClick={() => {
-							setsearchQuery('contains')
-						}}>Содержит</option> :
+					{searchTarget !== 'name' ?
 						<>
 							<option value="equally" onClick={() => {
 								setsearchQuery('equally')
@@ -59,12 +52,11 @@ const Filtering2 = ({ onSearchSend }) => {
 							<option value="less" onClick={() => {
 								setsearchQuery('less')
 							}}>Меньше</option>
-						</>
+						</> :
+						<option value="contains" onClick={() => {
+							setsearchQuery('contains')
+						}}>Содержит</option>
 					}
-
-
-
-
 				</select>
 			</fieldset>
 			<div className={styles.search}>
@@ -72,18 +64,14 @@ const Filtering2 = ({ onSearchSend }) => {
 					name="argument"
 					type="text"
 					placeholder="Значение"
-
-					// aria-label="Text input with 2 dropdown buttons"
 					value={searchValue}
 					onChange={(e) => {
 						setsearchValue(e.target.value)
-						console.log('e.target.value in setsearchValue', e.target.value)
 					}}
 				/>
 				<button
 					className={styles.search__button}
 					type="button"
-					// className="btn btn-outline-secondary"
 					onClick={() => onSearchSend(searchValue, searchTarget, searchQuery)}
 				>
 					Применить
@@ -93,4 +81,4 @@ const Filtering2 = ({ onSearchSend }) => {
 	)
 }
 
-export default Filtering2
+export default Filtering

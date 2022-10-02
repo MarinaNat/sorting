@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import styles from './Poginator2.module.scss';
+import styles from './Poginator.module.scss';
 
 const Poginator2 = ({ limitCountPage, tottalCount, paginate, nextPage, prevPage, currentPage }) => {
 	const pageNambers = []
@@ -8,7 +8,6 @@ const Poginator2 = ({ limitCountPage, tottalCount, paginate, nextPage, prevPage,
 		pageNambers.push(i)
 	}
 
-	console.log('currentPage)', currentPage)
 	return (
 		<div>
 			<ul className={styles.poginator}>

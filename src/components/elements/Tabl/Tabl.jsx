@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ArrowDown from '../../../svg/ArrowDown';
 import ArrowUp from '../../../svg/ArrowUp';
-import Filtering2 from '../Filtering/Filtering2';
+import Filtering from '../Filtering/Filtering';
 import styles from './Tabl.module.scss';
 
 const Tabl = ({ sortData, contactData, directionSort, onSearchSend, isLoading }) => {
@@ -16,7 +16,6 @@ const Tabl = ({ sortData, contactData, directionSort, onSearchSend, isLoading })
 
 	const fieldSortData = (field) => {
 		sortData(field)
-		console.log(field)
 		setfieldData(field)
 	}
 
@@ -26,7 +25,7 @@ const Tabl = ({ sortData, contactData, directionSort, onSearchSend, isLoading })
 	return (
 		<div className={`container`}>
 			<h1 className='title'>Таблица с сортировкой и фильтрацией</h1>
-			<Filtering2
+			<Filtering
 				onSearchSend={onSearchSend}
 			/>
 			<div className={styles.table}>

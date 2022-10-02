@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './App.scss';
 import Tabl from './components/elements/Tabl/Tabl';
-import Loader from './Loader/Loader';
 import { items } from './components/const/items';
 import { Route, Routes } from 'react-router-dom';
-import Poginator2 from './components/elements/Paginator/Poginator2';
+import Poginator from './components/elements/Paginator/Poginator';
 
 
 function App() {
@@ -33,15 +32,11 @@ function App() {
       target: target,
       query: query
     });
-    console.log('text, target, query', text, target, query);
 
   }
-  console.log('searchText', searchText)
 
   // функция для фильтрации
   const getFiltredData = () => {
-    console.log('filterItems: ');
-    console.log(searchText);
     if (JSON.stringify(searchText) === JSON.stringify({ text: '', target: '', query: '' })) {
       return contactData
     };
@@ -67,7 +62,6 @@ function App() {
   }
 
   const filtredData = getFiltredData()
-  console.log('filtredData', filtredData)
 
   // пагинация
   const lastBlockRow = currentPage * limitCountPage; //индекс последней страницы
@@ -103,31 +97,28 @@ function App() {
 
   return (
     <div className="app">
-      {isLoading ?
-        <Loader /> :
-        <div className='page'>
-          <Routes>
-            <Route
-              path='*'
-              element={<Tabl
-                sortData={sortData}
-                contactData={currentRow}
-                directionSort={directionSort}
-                onSearchSend={onSearchSend}
-                isLoading={isLoading}
-              />}>
-            </Route>
-          </Routes>
-          <Poginator2
-            limitCountPage={limitCountPage}
-            tottalCount={filtredData.length}
-            paginate={paginate}
-            nextPage={nextPage}
-            prevPage={prevPage}
-            currentPage={currentPage}
-          />
-        </div>
-      }
+      <div className='page'>
+        <Routes>
+          <Route
+            path='*'
+            element={<Tabl
+              sortData={sortData}
+              contactData={currentRow}
+              directionSort={directionSort}
+              onSearchSend={onSearchSend}
+              isLoading={isLoading}
+            />}>
+          </Route>
+        </Routes>
+        <Poginator
+          limitCountPage={limitCountPage}
+          tottalCount={filtredData.length}
+          paginate={paginate}
+          nextPage={nextPage}
+          prevPage={prevPage}
+          currentPage={currentPage}
+        />
+      </div>
     </div >
   );
 }
